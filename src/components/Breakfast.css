@@ -1,0 +1,8 @@
+h2 {
+    color: green;
+}
+
+.emphasizedText {
+    color: red;
+    font-weight: bold;
+}
