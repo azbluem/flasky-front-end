@@ -1,19 +1,20 @@
 import Breakfast from "./Breakfast";
+import PropTypes from 'prop-types'
 
-const BreakfastList = () => {
+const BreakfastList = ({list, functions}) => {
+  const makeBrekky = list.map((breakfast) => {
+    return (<li key={breakfast.id}><Breakfast id ={breakfast.id} name={breakfast.name} desc={breakfast.desc} prep={breakfast.prep} rating={breakfast.rating} functions={functions}/></li>)
+  })
+  console.log('BreakfastList')
   return (
     <ul>
-      <li>
-        <Breakfast />
-      </li>
-      <li>
-        <Breakfast />
-      </li>
-      <li>
-        <Breakfast />
-      </li>
+      {makeBrekky}
     </ul>
   );
 };
+
+BreakfastList.propTypes = {
+  list:PropTypes.arrayOf(PropTypes.object).isRequired
+}
 
 export default BreakfastList;

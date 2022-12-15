@@ -6,3 +6,22 @@ h2 {
     color: red;
     font-weight: bold;
 }
+
+
+.available {
+    background-color: green;
+}
+
+.eaten {
+    background-color: red;
+}
+
+.orange{
+    background-color: orange;
+}
+.yellow{
+    background-color: yellow;
+}
+.limegreen{
+    background-color: lime;
+}
