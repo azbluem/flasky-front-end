@@ -3,34 +3,16 @@ import PropTypes from 'prop-types'
 import { useState } from "react";
 
 const Breakfast = ({id,name,desc,prep,rating,eaten,upvotes,functions}) => {
-  // const name = name;
-  // const description = desc;
-  // const prepTime = prep;
-  // const rating = rating;
-  // console.log('Breakfast')
+
   const [isEaten,upvoteMeal] = [...functions]
-  // const updateEatStatus = isEaten(id)
-  // const [increaseUpvotes] = [upvoteButton]
-  // const changeUpvoteBGColor= upvoteColorSelector(id)
   console.log('Breakfast')
 
   const eatDict = {
     false:'available',
     true:'eaten'
   }
-  // const [eatStatus,updateEatStatus] = useState(false)
-  // const [upvotes,increaseUpvotes] = useState(0)
   const [upvotebgColor,changeUpvoteBGColor] = useState('orange')
-  
-  // const isEaten = () => {
-  //   updateEatStatus(!eatStatus)
-  // }
-  
-  
-  // const upvoteButton = (id) => {
-  //  increaseUpvotes(upvotes+1)
-  //  upvoteColorSelector(id)
-  // }
+
   const upvoteButton = () => {
     upvoteColorSelector()
     upvoteMeal(id)

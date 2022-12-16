@@ -70,7 +70,6 @@ function App() {
     const newBrekList = []
     for (const brek of brekList) {
       if (brek.id !==id) { 
-        // console.log(brek,id)
         newBrekList.push(brek)
         }
       else {
@@ -79,7 +78,6 @@ function App() {
           ...brek
         }
         newBrek.eaten = oppositeEaten
-        // console.log(newBrek)
         newBrekList.push(newBrek)
       }}
       
@@ -93,7 +91,6 @@ function App() {
           newBrekList.push(brek)
           }
         else {
-          const oppositeEaten = !brek.eaten
           const newBrek = {
             ...brek,
             upvotes:brek.upvotes+1
