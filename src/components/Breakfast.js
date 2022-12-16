@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const Breakfast = ({id,name,desc,prep,rating,eaten,upvotes,functions}) => {
 
-  const [isEaten,upvoteMeal] = [...functions]
+  const [isEaten,upvoteMeal,deleteMeal] = [...functions]
   console.log('Breakfast')
 
   const eatDict = {
@@ -35,12 +35,13 @@ const Breakfast = ({id,name,desc,prep,rating,eaten,upvotes,functions}) => {
 
   return (
     <div className={eatDict[eaten]}>
-      <h2>{name}</h2>
+      <h2>{id} {name}</h2>
       <p>{desc}</p>
       <p className="emphasizedText">Prep time: {prep} minutes</p>
       <p className="emphasizedText">Rating: {rating} stars</p>
       <button onClick={() => isEaten(id)}>Eat Me!</button>
       <button onClick={upvoteButton}>Upvote meal</button>
+      <button onClick={() => {deleteMeal(id)}}>Delete this meal</button>
       <p className={upvotebgColor}>{upvotes}</p>
     </div>
   );

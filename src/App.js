@@ -1,6 +1,7 @@
 import "./App.css";
 import BreakfastList from "./components/BreakfastList";
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
+import axios from "axios";
 
 const BreakfastObj = [
   {
@@ -61,8 +62,28 @@ const BreakfastObj = [
 
 
 function App() {
-  const breakfastCopy = BreakfastObj.map(breakfast=> {return {...breakfast}})
-  const [brekList,setBrekList] = useState(breakfastCopy)
+  const APIURL = 'http://127.0.0.1:5000/breakfast'
+  const [brekList,setBrekList] = useState([])
+  useEffect ( () => {
+    axios.get(APIURL)
+    .then((response) => {
+    // console.log(response)
+    const brekDBCopy = response.data.map((breakfast) => {
+      return {
+        "name":breakfast.name,
+        "id":breakfast.id,
+        "prep":breakfast.prep_time,
+        "rating":breakfast.rating,
+        desc:"Is this a breakfast?",
+        eaten:false,
+        "upvotes":breakfast.upvotes ? breakfast.upvotes : 0
+      }}) 
+      setBrekList(brekDBCopy);
+  })
+    .catch((error) => {console.log(error)})
+  }, [])
+  // const breakfastCopy = BreakfastObj.map(breakfast=> {return {...breakfast}})
+  
   const name = "Cheetahs";
   console.log('App.js after Cheetahs')
   //we need to make a new array each change
@@ -83,28 +104,43 @@ function App() {
       
       setBrekList(newBrekList);
     }
-    const upvoteMeal = (id) => {
-      const newBrekList = []
-      for (const brek of brekList) {
-        if (brek.id !==id) { 
-          // console.log(brek,id)
-          newBrekList.push(brek)
-          }
-        else {
-          const newBrek = {
-            ...brek,
-            upvotes:brek.upvotes+1
-          }
-          newBrekList.push(newBrek)
+  const upvoteMeal = (id) => {
+    const newBrekList = []
+    // const upvoteObj = {'upvotes':3}
+    // axios.patch(`${APIURL}/${id}` params=upvoteObj)
+    for (const brek of brekList) {
+      if (brek.id !==id) { 
+        // console.log(brek,id)
+        newBrekList.push(brek)
+        }
+      else {
+        const newBrek = {
+          ...brek,
+          upvotes:brek.upvotes+1
+        }
+        newBrekList.push(newBrek)
+      }}
+      
+      setBrekList(newBrekList);
+    }
+
+    const deleteMeal = (id) => {
+    axios.delete(`${APIURL}/${id}`)
+    .then(()=>{})
+    .catch((error)=> {console.log(error)})
+    const newBrekList = []
+    for (const brek of brekList) {
+      if (brek.id !==id) { 
+        // console.log(brek,id)
+        newBrekList.push(brek)
         }}
-        
-        setBrekList(newBrekList);
-      }
+      setBrekList(newBrekList);
+    }
   
 
   // 
 
-  const brekFunctions = [isEaten,upvoteMeal]
+  const brekFunctions = [isEaten,upvoteMeal,deleteMeal]
 
   return (
     <div>
