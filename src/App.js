@@ -1,9 +1,10 @@
 import "./App.css";
 import BreakfastList from "./components/BreakfastList";
+import NewBrekForm from "./components/newBrekForm";
 import {useState, useEffect} from 'react'
 import axios from "axios";
 
-const BreakfastObj = [
+/*const BreakfastObj = [
   {
     id:"1",
     name:"Cheese",
@@ -59,6 +60,7 @@ const BreakfastObj = [
     upvotes:0
   }
 ]
+*/
 
 
 function App() {
@@ -94,11 +96,10 @@ function App() {
         newBrekList.push(brek)
         }
       else {
-        const oppositeEaten = !brek.eaten
         const newBrek = {
-          ...brek
+          ...brek,
+          eaten:!brek.eaten
         }
-        newBrek.eaten = oppositeEaten
         newBrekList.push(newBrek)
       }}
       
@@ -145,8 +146,10 @@ function App() {
   return (
     <div>
       <h1>{name}' Mystery Breakfast App</h1>
+      <NewBrekForm />
       <p>Pick a food to eat, you'll find out what it is once you've eaten it!</p>
       <BreakfastList list={brekList} functions={brekFunctions}/>
+      
     </div>
   );
 }
