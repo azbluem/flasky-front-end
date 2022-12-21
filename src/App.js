@@ -66,7 +66,8 @@ import axios from "axios";
 function App() {
   const APIURL = 'http://127.0.0.1:5000/breakfast'
   const [brekList,setBrekList] = useState([])
-  useEffect ( () => {
+  
+  const fetchAllBreks = () => {
     axios.get(APIURL)
     .then((response) => {
     // console.log(response)
@@ -81,9 +82,9 @@ function App() {
         "upvotes":breakfast.upvotes ? breakfast.upvotes : 0
       }}) 
       setBrekList(brekDBCopy);
-  })
-    .catch((error) => {console.log(error)})
-  }, [])
+    }).catch((error) => {console.log(error)})}
+  
+  useEffect (fetchAllBreks, [])
   // const breakfastCopy = BreakfastObj.map(breakfast=> {return {...breakfast}})
   
   const name = "Cheetahs";
@@ -108,7 +109,7 @@ function App() {
   const upvoteMeal = (id) => {
     const newBrekList = []
     // const upvoteObj = {'upvotes':3}
-    // axios.patch(`${APIURL}/${id}` params=upvoteObj)
+    axios.patch(`${APIURL}/${id}/upvote`)
     for (const brek of brekList) {
       if (brek.id !==id) { 
         // console.log(brek,id)
@@ -138,7 +139,24 @@ function App() {
       setBrekList(newBrekList);
     }
   
+const submitNewBrek = (brek) => {
+  axios.post(APIURL,brek)
+  .then((response)=>{
+    fetchAllBreks();
+      /*
+  without API call
+  const newBreks = [...brekList]
+  const newBrekJSON = {
+    ...brek,
+    "id":response.data.id
+  }
+  newBreks.push(newBrekJSON)
+  setBrekList(newBreks)
+  */
+  })
+  .catch((error)=>console.log(error))
 
+}
   // 
 
   const brekFunctions = [isEaten,upvoteMeal,deleteMeal]
@@ -146,7 +164,7 @@ function App() {
   return (
     <div>
       <h1>{name}' Mystery Breakfast App</h1>
-      <NewBrekForm />
+      <NewBrekForm addBrekCallbackFunc={submitNewBrek}/>
       <p>Pick a food to eat, you'll find out what it is once you've eaten it!</p>
       <BreakfastList list={brekList} functions={brekFunctions}/>
       
